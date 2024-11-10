@@ -36,7 +36,7 @@ const Login = () => {
     setLoading(true);
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/checkCredentials`,
+        '/api/proxy/auth/checkCredentials',
         authState
       );
 
