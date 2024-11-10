@@ -1,26 +1,23 @@
-// /app/api/proxy/route.js
-
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  const { url, method, headers } = request;
-  const backendURL =
-    'https://changeeducationnepal.000.pe/api' + url.replace('/api/proxy', '');
+  // Extract only the path from the request URL (removing the base path if needed)
+  const urlPath = new URL(request.url).pathname.replace('/api/proxy', '');
+  const backendURL = `https://changeeducationnepal.000.pe/api${urlPath}`;
 
-  // Forward the request to the Laravel backend
   try {
     const response = await fetch(backendURL, {
-      method,
+      method: request.method,
       headers: {
-        ...Object.fromEntries(headers),
-        Origin: 'https://lms-wheat-seven.vercel.app', // Explicitly set origin
+        ...Object.fromEntries(request.headers),
+        Origin: 'https://lms-wheat-seven.vercel.app', // Set origin explicitly
       },
-      body: method !== 'GET' ? await request.text() : undefined,
+      body: request.method !== 'GET' ? await request.text() : undefined,
     });
 
     const data = await response.json();
 
-    // Return the response with appropriate headers
+    // Return the response with appropriate headers for CORS
     return NextResponse.json(data, {
       status: response.status,
       headers: {
