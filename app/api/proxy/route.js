@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  // Extract only the path from the request URL (removing the base path if needed)
+  // Use URL API to parse and replace only the necessary part
   const urlPath = new URL(request.url).pathname.replace('/api/proxy', '');
   const backendURL = `https://changeeducationnepal.000.pe/api${urlPath}`;
 
