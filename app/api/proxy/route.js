@@ -3,7 +3,8 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
   // Use URL API to parse and replace only the necessary part
   const urlPath = new URL(request.url).pathname.replace('/api/proxy', '');
-  const backendURL = `https://changeeducationnepal.000.pe/api${urlPath}`;
+
+  const backendURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}${urlPath}`;
 
   try {
     const response = await fetch(backendURL, {
