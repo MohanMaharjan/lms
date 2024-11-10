@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import myAxios from '@/lib/axios.config';
-
+import axios from 'axios';
 import { toast } from 'react-toastify';
 const Register = () => {
   const [authState, setAuthState] = useState({
@@ -34,8 +34,8 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    myAxios
-      .post('/auth/register', authState) // Use '/auth/register' if this is for registration
+    axios
+      .post('/api/proxy/auth/checkCredentials', authState) // Use '/auth/register' if this is for registration
       .then((res) => {
         setLoading(false);
         toast.success('Account Created Successfully');

@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import myAxios from '@/lib/axios.config';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const Login = () => {
   const router = useRouter();
@@ -34,7 +35,10 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await myAxios.post('/auth/checkCredentials', authState);
+      const res = await axios.post(
+        '/api/proxy/auth/checkCredentials',
+        authState
+      );
 
       if (res.status === 200) {
         const result = await signIn('credentials', {
